@@ -1,15 +1,17 @@
+// src/App.js
+import Provider from './context/Provider';
+
 import React from 'react';
-import TrafficSignal from './TrafficSignal';
 import './App.css';
 import Cars from './Cars';
 
 function App() {
   return (
-    <div className="container">
+    <Provider >
+
       <Cars />
-      <TrafficSignal />
-    </div>
+    </Provider>
   );
 }
 
-export default App;
+export default App
