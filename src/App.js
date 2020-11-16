@@ -1,16 +1,24 @@
 // src/App.js
-import Provider from './context/Provider';
-
+import CarsProvider from './context/CarsProvider';
+import TrafficSignal from './TrafficSignal';
+import TrafficProvider from './context/TrafficProvider'
 import React from 'react';
 import './App.css';
 import Cars from './Cars';
 
 function App() {
   return (
-    <Provider >
+    <>
+    <TrafficProvider>
+      <TrafficSignal />
 
+    <CarsProvider >      
       <Cars />
-    </Provider>
+    </CarsProvider>
+
+    </TrafficProvider>
+
+    </>
   );
 }
 

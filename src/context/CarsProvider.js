@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CarsContext from './CarsContext';
 
 
-function Provider ({ children }) {
+function CarsProvider ({ children }) {
   const [cars, setCars] = useState({
     redCar: false,
     blueCar: false,
@@ -12,7 +12,6 @@ function Provider ({ children }) {
   const moveCar = (car, side) => {
     setCars({...cars, [car]: side})
   };
-  console.log('Provider:', cars);
   return (
     <CarsContext.Provider value={{ cars, moveCar}} >
       {children}
@@ -21,4 +20,4 @@ function Provider ({ children }) {
 }
   
 
-export default Provider;
+export default CarsProvider;

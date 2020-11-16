@@ -1,14 +1,21 @@
+body {
+  overflow-x: hidden;
+} 
+
 .signal {
   width: 300px;
 }
 
 .car-right {
-  transform: translateX(200px);
+  transform: translateX(1500px);
+  transition:1s;
   width: 100px;
 }
 
 .car-left {
   width: 100px;
+  position: relative;
+  left:-50px;
 }
 
 .button-container {
@@ -22,4 +29,8 @@
   display: flex;
   justify-content: space-around;
   flex-direction: column;
+}
+
+.signal-img {
+  width: 30vw;
 }
