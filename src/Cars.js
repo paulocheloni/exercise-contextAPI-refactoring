@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState, useRef} from 'react'
+import React, {useContext, useEffect, useState, useRef} from 'react';
 import CarsContext from './context/CarsContext';
 import TrafficContext from './context/TrafficContext';
 import carBlue from './images/carBlue.jpeg';
@@ -11,9 +11,10 @@ function Cars () {
   const [streetMovement, setStreetMovement] = useState(true);
   const {redCar, blueCar, yellowCar} = cars;
   const carsMovementRef = useRef();
+  const mount = useRef();
 
   useEffect(() => {
-    const veryfiSignalColor = (signalColor) => {
+    const verifySignalColor = (signalColor) => {
     const colorMovementMatches = {
       red: false,
       yellow: true,
@@ -21,41 +22,29 @@ function Cars () {
     };
     setStreetMovement(colorMovementMatches[signalColor]);
     }
-    veryfiSignalColor(signalColor);
-  }, [signalColor, setStreetMovement]);
+    verifySignalColor(signalColor);
+  }, [signalColor, setStreetMovement]);  
 
-  
-
-  
-
-  useEffect(() => {
-      console.log('\nsignalColor', signalColor, '\nredCar',redCar, '\nyellow',yellowCar, '\nblue',blueCar)
+  useEffect(() => {     
       const startCarsMovement = () => {
-        const carsOnMovement = Object.keys(cars).filter(key => !cars[key])
-        console.log(
-          '\n carsMovement',
-          ...carsOnMovement,
-          '\n yellowCar: ',
-          yellowCar,
-          `\n current boolean side ${cars[carsOnMovement]}`
-        )
-        carsMovementRef.current = setTimeout(() => moveCar(...carsOnMovement, false), 1200)
-     }
-      if (signalColor !== 'red') {
-        startCarsMovement()
+          const carsOnMovement = Object.keys(cars).filter(key => !cars[key]);
+          const carsMoved = Object.keys(cars).filter(key => cars[key]);
 
-        
-      } else {
-        
-      }
-
+        if (signalColor !== 'red') {         
+          carsMovementRef.current = setTimeout(() => 
+            carsOnMovement.forEach(car => moveCar(car, true)), 5);
+          if (mount.current) setTimeout(() => carsOnMovement.forEach(car => moveCar(car, false)), 2020);
+        } else {
+          clearTimeout(carsMovementRef.current);   
+          carsMoved.forEach(car => moveCar(car, false));
+        }
+        mount.current = true;
+     }  
+      startCarsMovement();    
       return () => {
-          clearTimeout(carsMovementRef.current)
-        }    
-  }, [redCar, blueCar, yellowCar, signalColor])
-  
-  
-  
+          clearTimeout(carsMovementRef.current);
+      }    
+  }, [redCar, blueCar, yellowCar, signalColor]); 
 
    return (
       <div>
@@ -64,50 +53,23 @@ function Cars () {
             className={redCar ? 'car-right' : 'car-left'}
             src={carRed}
             alt="red car"
-          />
-          <button
-            onClick={() => moveCar('redCar', !redCar)}
-            type="button"
-            disabled={!streetMovement}
-          >
-            move
-          </button>
+          />          
 
            <img
             className={blueCar ? 'car-right' : 'car-left'}
             src={carBlue}
             alt="blue car"
           />
-          <button
-            onClick={() => moveCar('blueCar', !blueCar)}
-            type="button"
-            disabled={!streetMovement}
-
-            
-          >
-            move
-          </button>
+          
           <img
             className={yellowCar ? 'car-right' : 'car-left'}
             src={carYellow}
             alt="yellow car"
           />
-          <button
-            onClick={() => moveCar('yellowCar', !yellowCar)}
-            type="button"
-            disabled={!streetMovement}
-
-          >
-            move
-        </button>
+          
         </div>
       </div>
     )
-
   }
-
-  
-
-
 
 export default Cars;
